@@ -1,6 +1,12 @@
 import unittest
+from unittest.mock import patch
 
-from prompt_rewriter import build_localization_instruction, build_rewrite_prompt
+from prompt_rewriter import (
+    build_localization_instruction,
+    build_localization_result,
+    build_rewrite_prompt,
+    rewrite_brief_for_market,
+)
 from rule_loader import RuleValidationError, _validate, list_available_markets, load_market_rules
 
 
@@ -34,6 +40,25 @@ class PromptTests(unittest.TestCase):
         text = build_rewrite_prompt("Chai trà xanh", "japan")
         self.assertIn("Chai trà xanh", text)
         self.assertIn("Nhật Bản", text)
+
+    def test_structured_result_contains_prompt_rules_and_sources(self):
+        rules = load_market_rules("japan")
+        result = build_localization_result(
+            "Chai trà xanh", rules, "A quiet seasonal green tea bottle"
+        )
+
+        self.assertEqual(result["market_id"], "japan")
+        self.assertEqual(result["localized_prompt"], "A quiet seasonal green tea bottle")
+        self.assertTrue(any("Hoa anh đào" in rule["description"] for rule in result["applied_rules"]))
+        self.assertTrue(any("màu trắng" in rule["description"] for rule in result["avoid_rules"]))
+        self.assertGreater(len(result["sources"]), 0)
+
+    @patch("prompt_rewriter.call_llm", return_value="Localized prompt")
+    def test_rewrite_calls_llm_and_returns_structured_result(self, mock_call_llm):
+        result = rewrite_brief_for_market("Chai trà xanh", "japan")
+
+        self.assertEqual(result["localized_prompt"], "Localized prompt")
+        mock_call_llm.assert_called_once()
 
 
 if __name__ == "__main__":

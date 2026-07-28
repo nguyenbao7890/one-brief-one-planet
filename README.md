@@ -10,6 +10,7 @@ Input là một brief gốc; output là image prompt tiếng Anh có thêm các 
 - Validate các field quan trọng trước khi dùng.
 - Preview prompt offline, không cần API key.
 - Gọi Gemini qua một module trung gian duy nhất.
+- Trả về kết quả có cấu trúc gồm prompt, rule và nguồn tham khảo.
 - Có test cho loader, validation và prompt assembly.
 
 ## Chạy local
@@ -37,6 +38,10 @@ python3 prompt_rewriter.py \
   --brief "Chai trà thảo mộc mát lạnh, phong cách hiện đại" \
   --market middle_east_gulf
 ```
+
+Output thật là JSON, ví dụ có các field `localized_prompt`, `applied_rules`,
+`avoid_rules` và `sources`. Nhờ vậy n8n hoặc frontend có thể dùng trực tiếp
+mà không cần tách thông tin ra khỏi một đoạn text tự do.
 
 Các market đang có: `japan`, `middle_east_gulf`.
 
