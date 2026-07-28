@@ -1,4 +1,7 @@
 import unittest
+import json
+import threading
+from http.client import HTTPConnection
 from unittest.mock import patch
 
 from prompt_rewriter import (
@@ -7,6 +10,7 @@ from prompt_rewriter import (
     build_rewrite_prompt,
     rewrite_brief_for_market,
 )
+from api_server import create_server
 from rule_loader import RuleValidationError, _validate, list_available_markets, load_market_rules
 
 
@@ -70,6 +74,54 @@ class PromptTests(unittest.TestCase):
 
         self.assertEqual(result["localized_prompt"], "Localized prompt")
         mock_call_llm.assert_called_once()
+
+
+class ApiTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.server = create_server("127.0.0.1", 0)
+        cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        cls.thread.start()
+        cls.host, cls.port = cls.server.server_address
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+        cls.thread.join(timeout=2)
+
+    def request(self, method, path, body=None):
+        connection = HTTPConnection(self.host, self.port, timeout=2)
+        encoded = None if body is None else json.dumps(body).encode("utf-8")
+        headers = {"Content-Type": "application/json"} if encoded else {}
+        connection.request(method, path, body=encoded, headers=headers)
+        response = connection.getresponse()
+        payload = json.loads(response.read())
+        connection.close()
+        return response.status, payload
+
+    def test_health_endpoint(self):
+        status, payload = self.request("GET", "/health")
+        self.assertEqual(status, 200)
+        self.assertEqual(payload["status"], "ok")
+
+    def test_localize_rejects_invalid_payload(self):
+        status, payload = self.request("POST", "/localize", {"market_id": "japan"})
+        self.assertEqual(status, 400)
+        self.assertIn("brief", payload["error"])
+
+    @patch("api_server.rewrite_brief_for_market")
+    def test_localize_returns_domain_result(self, mock_rewrite):
+        mock_rewrite.return_value = {
+            "market_id": "japan",
+            "localized_prompt": "Localized prompt",
+        }
+        status, payload = self.request(
+            "POST", "/localize", {"brief": "Tea", "market_id": "japan"}
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload["localized_prompt"], "Localized prompt")
+        mock_rewrite.assert_called_once_with("Tea", "japan")
 
 
 if __name__ == "__main__":

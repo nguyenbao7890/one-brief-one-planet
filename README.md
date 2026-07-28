@@ -12,6 +12,7 @@ Input là một brief gốc; output là image prompt tiếng Anh có thêm các 
 - Gọi Gemini qua một module trung gian duy nhất.
 - Trả về kết quả có cấu trúc gồm prompt, rule và nguồn tham khảo.
 - Mỗi rule có schema version, ngày review và trạng thái review.
+- Có HTTP API `/health` và `/localize` để n8n gọi pipeline.
 - Có test cho loader, validation và prompt assembly.
 
 ## Chạy local
@@ -52,12 +53,33 @@ Chạy test:
 python3 -m unittest discover -s tests -v
 ```
 
+## Chạy HTTP API
+
+```bash
+python3 api_server.py --host 127.0.0.1 --port 8000
+```
+
+Kiểm tra service:
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+Gửi brief tới pipeline:
+
+```bash
+curl -X POST http://127.0.0.1:8000/localize \
+  -H 'Content-Type: application/json' \
+  -d '{"brief":"Chai trà thảo mộc mát lạnh","market_id":"japan"}'
+```
+
 ## Cấu trúc
 
 ```text
 cultural_rules/       dữ liệu văn hóa, tách khỏi code
 rule_loader.py        đọc và validate rule
 prompt_rewriter.py    dựng prompt và CLI
+api_server.py         HTTP adapter cho n8n
 llm_client.py         boundary duy nhất với Gemini
 tests/                test không cần gọi mạng
 ```
