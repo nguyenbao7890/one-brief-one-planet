@@ -1,0 +1,55 @@
+{
+  "market_id": "middle_east_gulf",
+  "market_name": "Trung Đông (UAE, Saudi Arabia)",
+  "product_category": "food_beverage",
+
+  "avoid": {
+    "imagery": [
+      {
+        "item": "Hình ảnh đồ uống có cồn hoặc gợi ý đến cồn",
+        "reason": "Rượu (haram) bị cấm theo giáo lý Hồi giáo; xuất hiện dù gián tiếp cũng gây phản cảm",
+        "source": "ProfileTree - Cultural Sensitivity in Middle Eastern Digital Campaigns, 2025"
+      },
+      {
+        "item": "Hình ảnh hở hang hoặc thân mật nam nữ nơi công cộng",
+        "reason": "Đi ngược giá trị khiêm tốn (modesty) được đề cao trong văn hóa Hồi giáo",
+        "source": "Sunan Designs - What Makes a Marketing Strategy Halal, 2025"
+      }
+    ],
+    "timing_topics": [
+      {
+        "topic": "Quảng bá ăn uống công khai, rầm rộ vào ban ngày tháng Ramadan",
+        "reason": "Người Hồi giáo nhịn ăn ban ngày trong tháng Ramadan; quảng cáo đồ ăn/uống thời điểm này dễ bị coi là thiếu tôn trọng",
+        "source": "ProfileTree - Cultural Sensitivity in Middle Eastern Digital Campaigns, 2025"
+      }
+    ]
+  },
+
+  "embrace": {
+    "values_tone": [
+      {
+        "value": "Nhấn mạnh yếu tố gia đình, cộng đồng trong thông điệp",
+        "reason": "Quyết định mua hàng chịu ảnh hưởng mạnh từ gia đình mở rộng và cộng đồng; truyền miệng tác động lớn đến lòng tin thương hiệu",
+        "source": "ProfileTree - Cultural Sensitivity in Middle Eastern Digital Campaigns, 2025"
+      },
+      {
+        "value": "Hiển thị rõ chứng nhận Halal như một tín hiệu đáng tin cậy, không chỉ để tuân thủ luật",
+        "reason": "Halal certification là dấu hiệu lòng tin quan trọng với người tiêu dùng, không chỉ là yêu cầu pháp lý",
+        "source": "Halal Times - How to Unlock the Potential of Halal Marketing, 2024"
+      }
+    ],
+    "occasions": [
+      {
+        "occasion": "Ramadan / Eid",
+        "note": "Thời điểm tiêu dùng và quà tặng tăng mạnh sau khi mặt trời lặn (iftar); phù hợp cho bao bì/khuyến mãi đặc biệt nếu đúng tinh thần tháng lễ",
+        "source": "ProfileTree - Cultural Sensitivity in Middle Eastern Digital Campaigns, 2025"
+      }
+    ]
+  },
+
+  "sources": [
+    "ProfileTree - Cultural Sensitivity in Middle Eastern Digital Campaigns, 2025 (profiletree.com)",
+    "Halal Times - How to Unlock the Potential of Halal Marketing to Grow Your Business, 2024 (halaltimes.com)",
+    "Sunan Designs - What Makes a Marketing Strategy Halal, 2025 (sunandesigns.com)"
+  ]
+}
