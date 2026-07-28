@@ -8,7 +8,6 @@ không cần đụng vào prompt_rewriter.py hay bất kỳ chỗ nào khác.
 
 import os
 from dotenv import load_dotenv
-from google import genai
 
 load_dotenv()  # đọc file .env, lấy GEMINI_API_KEY
 
@@ -25,17 +24,22 @@ def _get_client():
                 "(1) file .env có nằm cùng thư mục với file .py đang chạy không, "
                 "(2) nội dung đúng dạng GEMINI_API_KEY=xxx (không có dấu cách/ngoặc kép)."
             )
-        _client = genai.Client(api_key=api_key)  # truyền key rõ ràng, không phụ thuộc auto-detect
+        from google import genai
+
+        _client = genai.Client(api_key=api_key)
     return _client
 
 
-def call_llm(prompt: str, model: str = "gemini-3-flash-preview") -> str:
+def call_llm(prompt: str, model: str | None = None) -> str:
     """
     Gửi 1 prompt tới LLM, trả về text response thuần.
     """
     client = _get_client()
+    model = model or os.environ.get("GEMINI_MODEL", "gemini-3-flash-preview")
     response = client.models.generate_content(
         model=model,
         contents=prompt,
     )
-    return response.text
+    if not response.text:
+        raise RuntimeError("LLM trả về response rỗng.")
+    return response.text.strip()
