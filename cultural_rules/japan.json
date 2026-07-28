@@ -1,0 +1,76 @@
+{
+  "market_id": "japan",
+  "market_name": "Nhật Bản",
+  "product_category": "food_beverage",
+
+  "avoid": {
+    "imagery": [
+      {
+        "item": "Dùng màu trắng làm màu chủ đạo cho dịp mang tính ăn mừng, lễ hội mà không cân nhắc ngữ cảnh",
+        "reason": "Trắng (shiro) vừa biểu trưng sự thuần khiết vừa gắn với tang lễ; dùng sai ngữ cảnh dễ tạo liên tưởng không mong muốn",
+        "source": "ulpa.jp - Japanese Colour Psychology, 2025"
+      },
+      {
+        "item": "Thông điệp bán hàng trực diện kiểu 'mua ngay', so sánh thẳng với đối thủ",
+        "reason": "Quảng cáo Nhật thiên về tinh tế, gợi ý qua hình ảnh/ẩn dụ hơn là bán hàng trực diện, aggressive kiểu phương Tây",
+        "source": "Humble Bunny - Japanese Advertising vs. American Advertising, 2024"
+      }
+    ],
+    "timing_topics": [
+      {
+        "topic": "Dùng màu hồng (pink) làm màu chủ đạo cố định quanh năm",
+        "reason": "Hồng ở Nhật mang tính thời vụ (gắn với mùa xuân/sakura, nữ tính, trẻ em), không phải màu quốc gia dùng cố định",
+        "source": "ulpa.jp - Japanese Colour Psychology, 2025"
+      }
+    ]
+  },
+
+  "embrace": {
+    "values_tone": [
+      {
+        "value": "Gắn sản phẩm với 1 mùa cụ thể trong năm (limited edition theo mùa)",
+        "reason": "Marketing Nhật gắn rất chặt với 4 mùa; sản phẩm giới hạn theo mùa là chuẩn mực (ví dụ Starbucks Nhật ra đồ uống sakura mỗi mùa xuân)",
+        "source": "Smartling - The ultimate guide to Japan marketing for global brands, 2025"
+      },
+      {
+        "value": "Kể chuyện tinh tế, gợi mở qua hình ảnh và khoảng trống hơn là khẳng định trực tiếp",
+        "reason": "Quảng cáo Nhật chịu ảnh hưởng thẩm mỹ 'ma' (khoảng trống) và 'wabi-sabi', để hình ảnh gợi cảm xúc thay vì nói thẳng",
+        "source": "Japan Italy Bridge - The Essence of Japanese Advertising, 2025"
+      }
+    ],
+    "colors": [
+      {
+        "color": "Pastel, tông dịu nhẹ",
+        "reason": "Phổ biến hơn màu chói/mạnh trong quảng cáo Nhật, gợi cảm giác thanh tao, hài hòa",
+        "source": "Humble Bunny - Japanese Advertising vs. American Advertising, 2024"
+      }
+    ],
+    "motifs": [
+      {
+        "motif": "Hoa anh đào (sakura)",
+        "reason": "Biểu trưng sự đổi mới, vẻ đẹp phù du; phù hợp chiến dịch/sản phẩm giới hạn mùa xuân",
+        "source": "Smartling - The ultimate guide to Japan marketing for global brands, 2025"
+      },
+      {
+        "motif": "Hạc (crane)",
+        "reason": "Biểu trưng sự trường thọ, may mắn",
+        "source": "Smartling - The ultimate guide to Japan marketing for global brands, 2025"
+      }
+    ],
+    "occasions": [
+      {
+        "occasion": "Văn hóa tặng quà (gift-giving)",
+        "note": "Tặng quà diễn ra thường xuyên, mang ý nghĩa xã hội quan trọng; bao bì và chi tiết sản phẩm được kỳ vọng cao nếu định vị làm quà tặng",
+        "source": "Kadence - 8 important considerations before launching in Japan, 2025"
+      }
+    ]
+  },
+
+  "sources": [
+    "ulpa.jp - Japanese Colour Psychology: Your Complete Guide, 2025 (ulpa.jp)",
+    "Humble Bunny - Japanese Advertising vs. American Advertising, 2024 (humblebunny.com)",
+    "Smartling - The ultimate guide to Japan marketing for global brands, 2025 (smartling.com)",
+    "Japan Italy Bridge - The Essence of Japanese Advertising, 2025 (japanitalybridge.com)",
+    "Kadence - 8 important considerations before launching in Japan, 2025 (kadence.com)"
+  ]
+}
