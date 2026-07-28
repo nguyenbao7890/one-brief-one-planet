@@ -18,7 +18,10 @@ class RuleLoaderTests(unittest.TestCase):
     def test_all_market_files_are_valid(self):
         for market_id in list_available_markets():
             with self.subTest(market_id=market_id):
-                self.assertEqual(load_market_rules(market_id)["market_id"], market_id)
+                rules = load_market_rules(market_id)
+                self.assertEqual(rules["market_id"], market_id)
+                self.assertEqual(rules["schema_version"], "1.0")
+                self.assertEqual(rules["review_status"], "draft")
 
     def test_rejects_path_traversal(self):
         with self.assertRaises(ValueError):
@@ -27,6 +30,12 @@ class RuleLoaderTests(unittest.TestCase):
     def test_rejects_mismatched_market_id(self):
         with self.assertRaises(RuleValidationError):
             _validate({"market_id": "other", "market_name": "x", "avoid": {}, "embrace": {}, "sources": ["x"]}, "japan")
+
+    def test_rejects_unknown_review_status(self):
+        rules = load_market_rules("japan")
+        rules["review_status"] = "published"
+        with self.assertRaises(RuleValidationError):
+            _validate(rules, "japan")
 
 
 class PromptTests(unittest.TestCase):
@@ -48,6 +57,8 @@ class PromptTests(unittest.TestCase):
         )
 
         self.assertEqual(result["market_id"], "japan")
+        self.assertEqual(result["rule_schema_version"], "1.0")
+        self.assertEqual(result["rule_review_status"], "draft")
         self.assertEqual(result["localized_prompt"], "A quiet seasonal green tea bottle")
         self.assertTrue(any("Hoa anh đào" in rule["description"] for rule in result["applied_rules"]))
         self.assertTrue(any("màu trắng" in rule["description"] for rule in result["avoid_rules"]))

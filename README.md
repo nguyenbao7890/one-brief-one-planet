@@ -11,6 +11,7 @@ Input là một brief gốc; output là image prompt tiếng Anh có thêm các 
 - Preview prompt offline, không cần API key.
 - Gọi Gemini qua một module trung gian duy nhất.
 - Trả về kết quả có cấu trúc gồm prompt, rule và nguồn tham khảo.
+- Mỗi rule có schema version, ngày review và trạng thái review.
 - Có test cho loader, validation và prompt assembly.
 
 ## Chạy local
@@ -64,7 +65,8 @@ tests/                test không cần gọi mạng
 ## Thêm một market mới
 
 Tạo `cultural_rules/<market_id>.json` theo cấu trúc của file hiện có. Tối thiểu
-cần `market_id`, `market_name`, `avoid`, `embrace`, `sources`; sau đó chạy test
+cần `schema_version`, `market_id`, `market_name`, `avoid`, `embrace`, `sources`,
+`last_reviewed` và `review_status`; sau đó chạy test
 và thử `--preview`. `sources` là nơi lưu dấu vết nghiên cứu, không phải bằng
 chứng rằng mọi rule đều đúng trong mọi hoàn cảnh. Trước khi dùng cho campaign
 thật, rule nên được người bản địa hoặc chuyên gia thị trường review.
@@ -74,7 +76,6 @@ thật, rule nên được người bản địa hoặc chuyên gia thị trư�
 Prototype hiện chỉ tạo text prompt; chưa có web UI, database, versioning rule
 theo thời gian hay human approval workflow. Thứ tự mở rộng hợp lý là:
 
-1. Thêm schema/version cho rule và test từng market.
-2. Thêm output có cấu trúc: `localized_prompt`, `applied_rules`, `sources`.
-3. Thêm adapter HTTP nhỏ cho n8n.
-4. Thêm human review trước khi xuất bản creative.
+1. Thêm adapter HTTP nhỏ cho n8n.
+2. Thêm human review trước khi xuất bản creative.
+3. Thêm logging và bộ case đánh giá chất lượng theo market.

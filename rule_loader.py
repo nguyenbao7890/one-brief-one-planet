@@ -6,11 +6,23 @@ hoặc subprocess) để lấy rule trước khi rewrite prompt.
 """
 
 import json
+from datetime import date
 from pathlib import Path
 
 RULES_DIR = Path(__file__).parent / "cultural_rules"
 
-REQUIRED_TOP_LEVEL_KEYS = ["market_id", "market_name", "avoid", "embrace", "sources"]
+REQUIRED_TOP_LEVEL_KEYS = [
+    "schema_version",
+    "market_id",
+    "market_name",
+    "avoid",
+    "embrace",
+    "sources",
+    "last_reviewed",
+    "review_status",
+]
+SUPPORTED_SCHEMA_VERSION = "1.0"
+REVIEW_STATUSES = {"draft", "needs_review", "approved", "archived"}
 
 
 class RuleValidationError(Exception):
@@ -60,6 +72,30 @@ def _validate(data: dict, market_id: str) -> None:
     if data["market_id"] != market_id:
         raise RuleValidationError(
             f"Rule '{market_id}' có market_id không khớp: {data['market_id']!r}"
+        )
+
+    if data["schema_version"] != SUPPORTED_SCHEMA_VERSION:
+        raise RuleValidationError(
+            f"Rule '{market_id}' dùng schema {data['schema_version']!r}; "
+            f"phiên bản được hỗ trợ là {SUPPORTED_SCHEMA_VERSION!r}."
+        )
+
+    if not isinstance(data["last_reviewed"], str):
+        raise RuleValidationError(
+            f"Rule '{market_id}' cần last_reviewed dạng YYYY-MM-DD."
+        )
+    try:
+        date.fromisoformat(data["last_reviewed"])
+    except ValueError as exc:
+        raise RuleValidationError(
+            f"Rule '{market_id}' có last_reviewed không hợp lệ: "
+            f"{data['last_reviewed']!r}."
+        ) from exc
+
+    if data["review_status"] not in REVIEW_STATUSES:
+        raise RuleValidationError(
+            f"Rule '{market_id}' có review_status không hợp lệ: "
+            f"{data['review_status']!r}."
         )
 
     if not isinstance(data["market_name"], str) or not data["market_name"].strip():

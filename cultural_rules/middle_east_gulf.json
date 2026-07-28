@@ -1,7 +1,10 @@
 {
+  "schema_version": "1.0",
   "market_id": "middle_east_gulf",
   "market_name": "Trung Đông (UAE, Saudi Arabia)",
   "product_category": "food_beverage",
+  "last_reviewed": "2026-07-28",
+  "review_status": "draft",
 
   "avoid": {
     "imagery": [
