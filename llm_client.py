@@ -30,6 +30,15 @@ def _get_client():
     return _client
 
 
+def get_client():
+    """
+    Trả về client Gemini đã cấu hình sẵn (đọc key, tạo 1 lần, tái sử dụng).
+    Dùng khi module khác (VD: image_generator) cần gọi Gemini cho việc
+    không phải text-only (sinh ảnh...).
+    """
+    return _get_client()
+
+
 def call_llm(prompt: str, model: str | None = None) -> str:
     """
     Gửi 1 prompt tới LLM, trả về text response thuần.
